@@ -26,7 +26,7 @@ String tempDir = "/tmp/selenium/user_data_" + System.currentTimeMillis();
 options.addArguments("user-data-dir=" + tempDir);
 
 // Optional: Run in headless mode in CI environments
-options.addArguments("--headless");
+//options.addArguments("--headless");
 options.addArguments("--no-sandbox");
 options.addArguments("--disable-dev-shm-usage");
 
