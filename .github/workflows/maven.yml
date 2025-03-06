@@ -27,6 +27,31 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+      # Step 3: Install Xvfb to simulate a display
+    - name: Install Xvfb
+      run: sudo apt-get install -y xvfb
+
+      # Step 4: Set up and start Xvfb in the background
+    - name: Start Xvfb
+      run: |
+        export DISPLAY=:99
+        nohup Xvfb :99 -screen 0 1024x768x24 &
+    
+    # Step 5: Install necessary dependencies (e.g., Chrome and Chromedriver)
+    - name: Install Google Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo dpkg -i google-chrome-stable_current_amd64.deb
+        sudo apt --fix-broken install
+
+    - name: Install ChromeDriver
+      run: |
+        CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+        wget https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
