@@ -17,7 +17,15 @@ public class MainSteps{
         // Write code here that turns the phrase above into concrete actions
         //Playwright, Selenium, API code,
         System.out.println("User landed on netbanking page");
-        WebDriver driver = new ChromeDriver();
+         ChromeOptions options = new ChromeOptions();
+
+        // Set a unique user-data-dir
+        String userDataDir = "/path/to/unique/directory/" + System.currentTimeMillis();
+        options.addArguments("user-data-dir=" + userDataDir);
+
+        // Initialize ChromeDriver with options
+        WebDriver driver = new ChromeDriver(options);
+       // WebDriver driver = new ChromeDriver();
         driver.get("https://rahulshettyacademy.com/seleniumPractise/#/");
        // Assert.assertEquals(driver.getTitle(), "GreenKart - veg and fruits kart");
         driver.quit();
