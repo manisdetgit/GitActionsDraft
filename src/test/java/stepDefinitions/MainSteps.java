@@ -19,11 +19,16 @@ public class MainSteps{
         // Write code here that turns the phrase above into concrete actions
         //Playwright, Selenium, API code,
         System.out.println("User landed on netbanking page");
-         ChromeOptions options = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
 
-        // Set a unique user-data-dir
-        String userDataDir = "/path/to/unique/directory/" + System.currentTimeMillis();
-        options.addArguments("user-data-dir=" + userDataDir);
+// Create a temporary directory for user data, ensuring it is writable
+String tempDir = "/tmp/selenium/user_data_" + System.currentTimeMillis();
+options.addArguments("user-data-dir=" + tempDir);
+
+// Optional: Run in headless mode in CI environments
+options.addArguments("--headless");
+options.addArguments("--no-sandbox");
+options.addArguments("--disable-dev-shm-usage");
 
         // Initialize ChromeDriver with options
         WebDriver driver = new ChromeDriver(options);
